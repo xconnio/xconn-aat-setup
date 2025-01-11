@@ -1,0 +1,46 @@
+version: '1'
+
+realms:
+  - name: realm1
+
+transports:
+  - type: websocket
+    port: 8080
+    host: 0.0.0.0
+    serializers:
+      - json
+      - cbor
+      - msgpack
+
+authenticators:
+  cryptosign:
+    - authid: cryptosign-user
+      realm: realm1
+      role: anonymous
+      authorized_keys:
+        - ddc2838ede4304c1082c503f0af4f0c5ea7dea9fe436127643364c0670b69b08
+
+  wampcra:
+    - authid: wamp-cra-user
+      realm: realm1
+      role: anonymous
+      secret: cra-secret
+
+    - authid: wamp-cra-salt-user
+      realm: realm1
+      role: anonymous
+      secret: cra-salt-secret
+      salt: cra-salt
+      keylen: 32
+      iterations: 1000
+
+  ticket:
+    - authid: ticket-user
+      realm: realm1
+      role: anonymous
+      ticket: ticket-pass
+
+  anonymous:
+    - authid: john
+      realm: realm1
+      role: anonymous
