@@ -1,0 +1,12 @@
+version: "3.10"
+
+services:
+  crossbar:
+    container_name: crossbar-container
+    image: "crossbar-image"
+    restart: always
+    network_mode: host
+    stdin_open: true
+    tty: true
+    ports:
+      - "8081:8081"
