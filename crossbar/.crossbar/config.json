@@ -1,0 +1,128 @@
+{
+  "$schema": "https://raw.githubusercontent.com/crossbario/crossbar/master/crossbar.json",
+  "version": 2,
+  "controller": {
+  },
+  "workers": [
+    {
+      "type": "router",
+      "options": {
+        "pythonpath": [
+          ".."
+        ]
+      },
+      "realms": [
+        {
+          "name": "realm1",
+          "roles": [
+            {
+              "name": "backend",
+              "permissions": [
+                {
+                  "uri": "io.xconn.backend",
+                  "match": "prefix",
+                  "allow": {
+                    "call": true,
+                    "register": true,
+                    "publish": true,
+                    "subscribe": true
+                  },
+                  "disclose": {
+                    "caller": false,
+                    "publisher": false
+                  },
+                  "cache": true
+                }
+              ]
+            },
+            {
+              "name": "anonymous",
+              "permissions": [
+                {
+                  "uri": "",
+                  "match": "prefix",
+                  "allow": {
+                    "call": true,
+                    "register": true,
+                    "publish": true,
+                    "subscribe": true
+                  },
+                  "disclose": {
+                    "caller": false,
+                    "publisher": false
+                  },
+                  "cache": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transports": [
+        {
+          "type": "websocket",
+          "endpoint": {
+            "type": "tcp",
+            "port": 8081,
+            "backlog": 1024
+          },
+          "auth": {
+            "cryptosign": {
+              "type": "static",
+              "principals": {
+                "cryptosign-user": {
+                  "realm": "realm1",
+                  "role": "anonymous",
+                  "authorized_keys": [
+                    "ddc2838ede4304c1082c503f0af4f0c5ea7dea9fe436127643364c0670b69b08"
+                  ]
+                }
+              }
+            },
+            "wampcra": {
+              "type": "static",
+              "users": {
+                "wamp-cra-user": {
+                  "secret": "cra-secret",
+                  "role": "anonymous"
+                },
+                "wamp-cra-salt-user": {
+                  "secret": "cra-salt-secret",
+                  "role": "anonymous",
+                  "salt": "cra-salt",
+                  "iterations": 1000,
+                  "keylen": 32
+                }
+              }
+            },
+            "ticket": {
+              "type": "static",
+              "principals": {
+                "ticket-user": {
+                  "ticket": "ticket-pass",
+                  "role": "anonymous"
+                }
+              }
+            }
+          },
+          "options": {
+            "max_message_size": 1048576
+          },
+          "serializers": [
+            "cbor",
+            "msgpack",
+            "json"
+          ]
+        }
+      ],
+      "components": [
+        {
+          "type": "class",
+          "classname": "backend.BackendSession",
+          "realm": "realm1",
+          "role": "backend"
+        }
+      ]
+    }
+  ]
+}
