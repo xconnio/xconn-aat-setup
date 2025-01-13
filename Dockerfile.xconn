@@ -13,4 +13,4 @@ WORKDIR /app
 COPY --from=builder /app/xconn /app/
 COPY --from=builder /app/cmd/config.yaml /app/
 
-CMD ["./xconn"]
+CMD ["./xconn", "--config", "config.yaml"]
