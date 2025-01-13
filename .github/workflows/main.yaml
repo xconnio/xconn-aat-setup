@@ -1,4 +1,4 @@
-name: aat CI
+name: AAT CI
 
 on:
   push:
@@ -8,30 +8,24 @@ on:
     branches:
       - main
 
+  workflow_call:
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Start Routers Workflow
+        uses: ./.github/workflows/start-routers.yml
+        with:
+          crossbar_port: "8081"
+          xconn_port: "8080"
 
-      - name: Build crossbar docker
-        run: make build-docker-crossbar
-
-      - name: Run crossbar
-        run: make run-docker-crossbar &
-
-      - name: Build xconn docker
-        run: make build-docker-xconn
-
-      - name: Run xconn
-        run: make run-docker-xconn &
-
-      - name: Install wick
+      - name: Install Wick
         run: sudo snap install wick --classic
 
-      - name: Test crossbar
+      - name: Test Crossbar
         run: make run-wick-commands url=ws://localhost:8081/ws
 
-      - name: Test xconn
+      - name: Test XConn
         run: make run-wick-commands url=ws://localhost:8080/ws

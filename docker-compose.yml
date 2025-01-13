@@ -9,7 +9,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "8081:8081"
+      - "${CROSSBAR_PORT:-8081}:${CROSSBAR_PORT:-8081}"
 
   xconn:
     container_name: xconn
@@ -17,4 +17,4 @@ services:
     restart: always
     network_mode: host
     ports:
-      - "8080:8080"
+      - "${XCONN_PORT:-8080}:${XCONN_PORT:-8080}"

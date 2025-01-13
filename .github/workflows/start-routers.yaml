@@ -1,0 +1,32 @@
+name: Start Routers
+
+on:
+  workflow_call:
+    inputs:
+      crossbar_port:
+        description: "Port for Crossbar router"
+        required: true
+        type: string
+        default: "8081"
+      xconn_port:
+        description: "Port for XConn router"
+        required: true
+        type: string
+        default: "8080"
+
+jobs:
+  start-routers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Crossbar Docker
+        run: make build-docker-crossbar
+
+      - name: Build XConn Docker
+        run: make build-docker-xconn
+
+      - name: Run XConn Docker
+        run: CROSSBAR_PORT=${{ inputs.crossbar_port }} XCONN_PORT=${{ inputs.xconn_port }} docker compose up
