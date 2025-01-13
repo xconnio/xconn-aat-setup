@@ -10,3 +10,11 @@ services:
     tty: true
     ports:
       - "8081:8081"
+
+  xconn:
+    container_name: xconn
+    image: "xconn-image"
+    restart: always
+    network_mode: host
+    ports:
+      - "8080:8080"
