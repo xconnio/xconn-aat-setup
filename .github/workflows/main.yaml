@@ -1,0 +1,22 @@
+name: aat CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build crossbar docker
+        run: make build-docker-crossbar
+
+      - name: Build xconn docker
+        run: make build-docker-xconn
