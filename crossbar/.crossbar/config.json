@@ -67,6 +67,10 @@
             "backlog": 1024
           },
           "auth": {
+            "anonymous": {
+              "type": "static",
+              "role": "anonymous"
+            },
             "cryptosign": {
               "type": "static",
               "principals": {
