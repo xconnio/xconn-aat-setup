@@ -18,5 +18,11 @@ jobs:
       - name: Build crossbar docker
         run: make build-docker-crossbar
 
+      - name: Run crossbar
+        run: make run-docker-crossbar &
+
       - name: Build xconn docker
         run: make build-docker-xconn
+
+      - name: Run xconn
+        run: make run-docker-xconn &
