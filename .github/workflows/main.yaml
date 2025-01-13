@@ -26,3 +26,12 @@ jobs:
 
       - name: Run xconn
         run: make run-docker-xconn &
+
+      - name: Install wick
+        run: sudo snap install wick --classic
+
+      - name: Test crossbar
+        run: make run-wick-commands url=ws://localhost:8081/ws
+
+      - name: Test xconn
+        run: make run-wick-commands url=ws://localhost:8080/ws
