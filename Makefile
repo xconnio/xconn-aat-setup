@@ -1,7 +1,7 @@
-build-docker:
-	docker build -t crossbar-image .
+build-docker-crossbar:
+	docker build -t crossbar-image -f Dockerfile.crossbar .
 
-run-docker:
+run-docker-crossbar:
 	docker-compose -f docker-compose.yml run --rm crossbar
 
 build-docker-xconn:
