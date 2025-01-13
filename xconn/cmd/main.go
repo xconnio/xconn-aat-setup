@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -21,7 +22,10 @@ const (
 )
 
 func main() {
-	closers, err := util.StartServerFromConfigFile("./cmd/config.yaml")
+	configFile := flag.String("config", "./cmd/config.yaml", "Path to the configuration file")
+	flag.Parse()
+
+	closers, err := util.StartServerFromConfigFile(*configFile)
 	if err != nil {
 		log.Fatalf("failed to start server: %v", err)
 	}
