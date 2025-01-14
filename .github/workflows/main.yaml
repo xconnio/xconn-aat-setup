@@ -17,9 +17,12 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: call-start-routers
+    needs: call-start-routers  # Ensures 'call-start-routers' runs first
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Install Wick
         run: sudo snap install wick --classic
 
@@ -28,3 +31,6 @@ jobs:
 
       - name: Test XConn
         run: make run-wick-commands url=ws://localhost:8080/ws
+
+      - name: Additional step
+        run: echo "This is an additional step after the reusable workflow."
