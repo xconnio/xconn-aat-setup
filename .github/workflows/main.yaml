@@ -15,9 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build crossbar docker
-        run: make build-docker-crossbar
-
       - name: Build xconn docker
         run: make build-docker-xconn
 
