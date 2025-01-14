@@ -9,14 +9,11 @@ on:
       - main
 
 jobs:
-  call-start-routers:
+  test:
     uses: ./.github/workflows/start-routers.yaml
     with:
       crossbar_port: "8081"
       xconn_port: "8080"
-
-  test:
-    runs-on: ubuntu-latest
 
     steps:
       - name: Install Wick
