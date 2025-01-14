@@ -18,5 +18,5 @@ services:
     image: "xconn-image"
     restart: always
     network_mode: host
-    ports:
-      - "8080:8080"
+    volumes:
+      - ./xconn/cmd/config.yaml:/app/config.yaml
