@@ -2,14 +2,16 @@ version: "3.10"
 
 services:
   crossbar:
+    user: root
     container_name: crossbar-container
-    image: "crossbar-image"
+    image: "crossbario/crossbar"
     restart: always
     network_mode: host
     stdin_open: true
     tty: true
-    ports:
-      - "8081:8081"
+    volumes:
+      - ./crossbar/.crossbar/:/node/.crossbar/
+      - ./crossbar/backend.py:/node/backend.py
 
   xconn:
     container_name: xconn
