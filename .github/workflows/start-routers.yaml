@@ -29,4 +29,4 @@ jobs:
         run: make build-docker-xconn
 
       - name: Run XConn Docker
-        run: CROSSBAR_PORT=${{ inputs.crossbar_port }} XCONN_PORT=${{ inputs.xconn_port }} docker compose up
+        run: CROSSBAR_PORT=${{ inputs.crossbar_port }} XCONN_PORT=${{ inputs.xconn_port }} docker compose up -d
