@@ -8,19 +8,17 @@ on:
     branches:
       - main
 
-  workflow_call:
-
 jobs:
+  call-start-routers:
+    uses: ./.github/workflows/start-routers.yaml
+    with:
+      crossbar_port: "8081"
+      xconn_port: "8080"
+
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Start Routers Workflow
-        uses: ./.github/workflows/start-routers.yml
-        with:
-          crossbar_port: "8081"
-          xconn_port: "8080"
-
       - name: Install Wick
         run: sudo snap install wick --classic
 
