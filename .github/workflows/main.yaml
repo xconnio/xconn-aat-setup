@@ -18,6 +18,9 @@ jobs:
       - name: Build xconn docker
         run: make build-docker-xconn
 
+      - name: Build crossbar docker
+        run: make build-docker-crossbar
+
       - name: Run routers
         run: docker compose up -d
 
