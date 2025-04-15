@@ -1,5 +1,5 @@
 run-docker-crossbar:
-	docker compose -f docker-compose.yml run --rm crossbar
+	docker compose up crossbar
 
 build-docker-xconn:
 	docker build -f Dockerfile.xconn -t xconn-image .
@@ -8,7 +8,7 @@ build-docker-crossbar:
 	docker build -f Dockerfile.crossbar -t crossbar-image .
 
 run-docker-xconn:
-	docker compose -f docker-compose.yml run --rm xconn
+	docker compose up xconn
 
 run-wick-commands:
 	wick call io.xconn.backend.add2 2 4 --url "$(url)"
