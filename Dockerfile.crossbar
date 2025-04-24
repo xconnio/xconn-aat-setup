@@ -1,0 +1,23 @@
+FROM python:3.12-slim
+
+WORKDIR /node
+
+RUN apt update && apt install -y git curl && apt clean
+
+# download the latest installer for uv
+ADD https://astral.sh/uv/install.sh /uv-installer.sh
+
+# run the installer then remove it
+RUN sh /uv-installer.sh && rm /uv-installer.sh && ls
+
+# ensure the installed binary is on the `PATH`
+ENV PATH="/root/.local/bin/:$PATH"
+
+# clone the latest crossbar project
+RUN git clone https://github.com/crossbario/crossbar.git
+
+# install code in pyton's site-packages, inside container
+RUN uv pip install ./crossbar --system
+
+# run crossbar router
+ENTRYPOINT ["crossbar", "start"]
