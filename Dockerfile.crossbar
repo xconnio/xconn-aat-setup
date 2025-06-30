@@ -16,8 +16,10 @@ ENV PATH="/root/.local/bin/:$PATH"
 # clone the latest crossbar project
 RUN git clone https://github.com/crossbario/crossbar.git
 
+RUN sed -i '/^autobahn.*@ git+https:\/\/github.com\/crossbario\/autobahn-python.git/d' crossbar/requirements-latest.txt
+
 # install code in pyton's site-packages, inside container
-RUN uv pip install ./crossbar --system
+RUN uv pip install ./crossbar web3 qrcode --system
 
 # run crossbar router
 ENTRYPOINT ["crossbar", "start"]
