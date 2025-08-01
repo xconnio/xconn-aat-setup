@@ -8,10 +8,10 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/xconnio/nxt/util"
 	"github.com/xconnio/wampproto-go"
 	wampprotoutil "github.com/xconnio/wampproto-go/util"
 	"github.com/xconnio/xconn-go"
-	"github.com/xconnio/xconn-go/util"
 )
 
 const (
@@ -30,36 +30,37 @@ func main() {
 		log.Fatalf("failed to start server: %v", err)
 	}
 
-	session, err := xconn.Connect(context.Background(), serverURL, realm)
+	session, err := xconn.ConnectAnonymous(context.Background(), serverURL, realm)
 	if err != nil {
 		log.Fatalf("failed to connect session: %v", err)
 	}
 
-	_, err = session.Register(procedureName, func(ctx context.Context, invocation *xconn.Invocation) *xconn.Result {
-		if len(invocation.Arguments) != 2 {
-			return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"must be called with exactly 2 arguments"}}
-		}
+	registerResponse := session.Register(procedureName,
+		func(ctx context.Context, invocation *xconn.Invocation) *xconn.Result {
+			if len(invocation.Arguments) != 2 {
+				return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"must be called with exactly 2 arguments"}}
+			}
 
-		firstNumber, ok := wampprotoutil.AsInt64(invocation.Arguments[0])
-		if !ok {
-			return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"arguments must be int"}}
-		}
+			firstNumber, ok := wampprotoutil.AsUInt64(invocation.Arguments[0])
+			if !ok {
+				return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"arguments must be int"}}
+			}
 
-		secondNumber, ok := wampprotoutil.AsInt64(invocation.Arguments[1])
-		if !ok {
-			return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"arguments must be int"}}
-		}
+			secondNumber, ok := wampprotoutil.AsUInt64(invocation.Arguments[1])
+			if !ok {
+				return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"arguments must be int"}}
+			}
 
-		return &xconn.Result{Arguments: []any{firstNumber + secondNumber}}
-	}, nil)
-	if err != nil {
+			return xconn.NewInvocationResult(firstNumber + secondNumber)
+		}).Do()
+	if registerResponse.Err != nil {
 		log.Fatalf("failed to register procedure: %v", err)
 	}
 
-	_, err = session.Subscribe(topicName, func(event *xconn.Event) {
+	subscribeResponse := session.Subscribe(topicName, func(event *xconn.Event) {
 		fmt.Printf("event received: args: %v, kwargs: %v\n", event.Arguments, event.KwArguments)
-	}, nil)
-	if err != nil {
+	}).Do()
+	if subscribeResponse.Err != nil {
 		log.Fatalf("failed to subscribe to topic: %v", err)
 	}
 
