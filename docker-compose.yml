@@ -11,11 +11,11 @@ services:
       - ./crossbar/.crossbar/:/node/.crossbar/
       - ./crossbar/backend.py:/node/backend.py
 
-  xconn:
-    container_name: xconn
-    image: "xconn-image"
+  nxt:
+    container_name: nxt
+    image: "nxt-image"
     restart: always
     ports:
       - "8080:8080"
     volumes:
-      - ./xconn/cmd/config.yaml:/app/config.yaml
+      - ./nxt/cmd/config.yaml:/app/config.yaml

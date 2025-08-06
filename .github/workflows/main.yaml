@@ -15,8 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build xconn docker
-        run: make build-docker-xconn
+      - name: Build nxt docker
+        run: make build-docker-nxt
 
       - name: Build crossbar docker
         run: make build-docker-crossbar
@@ -30,5 +30,5 @@ jobs:
       - name: Test crossbar
         run: make run-wick-commands url=ws://localhost:8081/ws
 
-      - name: Test xconn
+      - name: Test nxt
         run: make run-wick-commands url=ws://localhost:8080/ws
