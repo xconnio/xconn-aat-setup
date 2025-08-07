@@ -19,3 +19,10 @@ services:
       - "8080:8080"
     volumes:
       - ./nxt/cmd/config.yaml:/app/config.yaml
+
+  nexus:
+    container_name: nexus
+    image: "xconnio/nexus:latest"
+    restart: always
+    ports:
+      - "8082:8082"
