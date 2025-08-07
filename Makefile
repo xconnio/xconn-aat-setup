@@ -10,6 +10,12 @@ build-docker-crossbar:
 run-docker-nxt:
 	docker compose up nxt
 
+build-docker-nexus:
+	docker build -f Dockerfile.nexus -t xconnio/nexus:latest .
+
+run-docker-nexus:
+	docker compose up nexus
+
 run-wick-commands:
 	wick call io.xconn.backend.add2 2 4 --url "$(url)"
 	wick call io.xconn.backend.add2 2 4 --url "$(url)" --authid cryptosign-user --private-key 150085398329d255ad69e82bf47ced397bcec5b8fbeecd28a80edbbd85b49081

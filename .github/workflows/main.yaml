@@ -21,6 +21,9 @@ jobs:
       - name: Build crossbar docker
         run: make build-docker-crossbar
 
+      - name: Build nexus docker
+        run: make build-docker-nexus
+
       - name: Run routers
         run: docker compose up -d
 
@@ -32,3 +35,6 @@ jobs:
 
       - name: Test nxt
         run: make run-wick-commands url=ws://localhost:8080/ws
+
+      - name: Test nexus
+        run: make run-wick-commands url=ws://localhost:8082/ws
