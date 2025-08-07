@@ -35,3 +35,6 @@ jobs:
 
       - name: Test nxt
         run: make run-wick-commands url=ws://localhost:8080/ws
+
+      - name: Test nexus
+        run: make run-wick-commands url=ws://localhost:8082/ws
