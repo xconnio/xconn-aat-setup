@@ -1,7 +1,7 @@
 services:
   crossbar:
     container_name: crossbar-container
-    image: "crossbar-image"
+    image: "xconnio/crossbar:latest"
     restart: always
     ports:
       - "8081:8081"
@@ -13,7 +13,7 @@ services:
 
   nxt:
     container_name: nxt
-    image: "nxt-image"
+    image: "xconnio/nxt:latest"
     restart: always
     ports:
       - "8080:8080"
