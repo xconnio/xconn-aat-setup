@@ -10,7 +10,6 @@ import (
 
 	"github.com/xconnio/nxt/util"
 	"github.com/xconnio/wampproto-go"
-	wampprotoutil "github.com/xconnio/wampproto-go/util"
 	"github.com/xconnio/xconn-go"
 )
 
@@ -36,19 +35,20 @@ func main() {
 	}
 
 	registerResponse := session.Register(procedureName,
-		func(ctx context.Context, invocation *xconn.Invocation) *xconn.Result {
-			if len(invocation.Arguments) != 2 {
-				return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"must be called with exactly 2 arguments"}}
+		func(ctx context.Context, invocation *xconn.Invocation) *xconn.InvocationResult {
+			if len(invocation.Args()) != 2 {
+				return &xconn.InvocationResult{Err: wampproto.ErrInvalidArgument,
+					Args: []any{"must be called with exactly 2 arguments"}}
 			}
 
-			firstNumber, ok := wampprotoutil.AsUInt64(invocation.Arguments[0])
-			if !ok {
-				return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"arguments must be int"}}
+			firstNumber, err := invocation.ArgUInt64(0)
+			if err != nil {
+				return &xconn.InvocationResult{Err: wampproto.ErrInvalidArgument, Args: []any{"arguments must be int"}}
 			}
 
-			secondNumber, ok := wampprotoutil.AsUInt64(invocation.Arguments[1])
-			if !ok {
-				return &xconn.Result{Err: wampproto.ErrInvalidArgument, Arguments: []any{"arguments must be int"}}
+			secondNumber, err := invocation.ArgUInt64(1)
+			if err != nil {
+				return &xconn.InvocationResult{Err: wampproto.ErrInvalidArgument, Args: []any{"arguments must be int"}}
 			}
 
 			return xconn.NewInvocationResult(firstNumber + secondNumber)
@@ -58,7 +58,7 @@ func main() {
 	}
 
 	subscribeResponse := session.Subscribe(topicName, func(event *xconn.Event) {
-		fmt.Printf("event received: args: %v, kwargs: %v\n", event.Arguments, event.KwArguments)
+		fmt.Printf("event received: args: %v, kwargs: %v\n", event.Args(), event.Kwargs())
 	}).Do()
 	if subscribeResponse.Err != nil {
 		log.Fatalf("failed to subscribe to topic: %v", err)
