@@ -26,3 +26,9 @@ jobs:
 
       - name: Push nxt-router docker image
         run: docker push xconnio/nxt:latest
+
+      - name: Build nexus-router docker image
+        run: docker build -f Dockerfile.nexus -t xconnio/nexus:latest .
+
+      - name: Push nexus-router docker image
+        run: docker push xconnio/nexus:latest
