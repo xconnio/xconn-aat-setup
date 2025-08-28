@@ -25,16 +25,18 @@ jobs:
         run: make build-docker-nexus
 
       - name: Run routers
-        run: docker compose up -d
+        run: make up
 
       - name: Install wick
-        run: sudo snap install wick --classic
+        run: sudo snap install wick --classic --edge
 
       - name: Test crossbar
         run: make run-wick-commands url=ws://localhost:8081/ws
 
       - name: Test nxt
-        run: make run-wick-commands url=ws://localhost:8080/ws
+        run: |
+          make run-wick-commands url=ws://localhost:8080/ws
+          make run-wick-commands url=unix:///tmp/nxt.sock
 
       - name: Test nexus
         run: make run-wick-commands url=ws://localhost:8082/ws

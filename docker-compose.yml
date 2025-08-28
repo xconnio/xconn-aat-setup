@@ -19,6 +19,9 @@ services:
       - "8080:8080"
     volumes:
       - ./nxt/cmd/config.yaml:/app/config.yaml
+      - /tmp/:/tmp/
+    user: "${MY_UID}:${MY_GID}"
+    entrypoint: [ "/bin/sh", "-c", "rm -f /tmp/nxt.sock && exec /app/nxt -config /app/config.yaml" ]
 
   nexus:
     container_name: nexus
