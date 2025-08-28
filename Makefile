@@ -2,10 +2,10 @@ run-docker-crossbar:
 	docker compose up crossbar
 
 build-docker-nxt:
-	docker build -f Dockerfile.nxt -t nxt-image .
+	docker build -f Dockerfile.nxt -t xconnio/nxt:latest .
 
 build-docker-crossbar:
-	docker build -f Dockerfile.crossbar -t crossbar-image .
+	docker build -f Dockerfile.crossbar -t xconnio/crossbar:latest .
 
 run-docker-nxt:
 	docker compose up nxt
@@ -22,3 +22,6 @@ run-wick-commands:
 	wick call io.xconn.backend.add2 2 4 --url "$(url)" --ticket ticket-pass --authid ticket-user
 	wick call io.xconn.backend.add2 2 4 --url "$(url)" --authid wamp-cra-user --secret cra-secret
 	wick call io.xconn.backend.add2 2 4 --url "$(url)" --authid wamp-cra-salt-user --secret cra-salt-secret
+
+up:
+	MY_UID=$$(id -u) MY_GID=$$(id -g) docker compose up -d
