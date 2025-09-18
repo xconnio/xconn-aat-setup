@@ -40,3 +40,13 @@ jobs:
 
       - name: Test nexus
         run: make run-wick-commands url=ws://localhost:8082/ws
+
+      - name: Setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: nxt/go.mod
+          cache: true
+
+      - name: Run nxt tests
+        working-directory: nxt
+        run: make test
