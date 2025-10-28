@@ -8,9 +8,9 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/xconnio/nxt/util"
 	"github.com/xconnio/wampproto-go"
 	"github.com/xconnio/xconn-go"
+	"github.com/xconnio/xconn-go/nxt"
 )
 
 const (
@@ -24,7 +24,7 @@ func main() {
 	configFile := flag.String("config", "./cmd/config.yaml", "Path to the configuration file")
 	flag.Parse()
 
-	closers, err := util.StartServerFromConfigFile(*configFile)
+	closers, err := nxt.StartServerFromConfigFile(*configFile)
 	if err != nil {
 		log.Fatalf("failed to start server: %v", err)
 	}
