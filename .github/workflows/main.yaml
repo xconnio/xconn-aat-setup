@@ -18,8 +18,8 @@ jobs:
       - name: Build nxt docker
         run: make build-docker-nxt
 
-      - name: Build crossbar docker
-        run: make build-docker-crossbar
+#      - name: Build crossbar docker
+#        run: make build-docker-crossbar
 
       - name: Build nexus docker
         run: make build-docker-nexus

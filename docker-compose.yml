@@ -1,15 +1,15 @@
 services:
-  crossbar:
-    container_name: crossbar-container
-    image: "xconnio/crossbar:latest"
-    restart: always
-    ports:
-      - "8081:8081"
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./crossbar/.crossbar/:/node/.crossbar/
-      - ./crossbar/backend.py:/node/backend.py
+#  crossbar:
+#    container_name: crossbar-container
+#    image: "xconnio/crossbar:latest"
+#    restart: always
+#    ports:
+#      - "8081:8081"
+#    stdin_open: true
+#    tty: true
+#    volumes:
+#      - ./crossbar/.crossbar/:/node/.crossbar/
+#      - ./crossbar/backend.py:/node/backend.py
 
   nxt:
     container_name: nxt
