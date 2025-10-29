@@ -21,6 +21,14 @@ transports:
       - cbor
       - msgpack
 
+  - type: websocket
+    listener: tcp
+    address: 0.0.0.0:8081
+    serializers:
+      - json
+      - cbor
+      - msgpack
+
   - type: rawsocket
     listener: unix
     address: /tmp/nxt.sock
