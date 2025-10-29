@@ -2,6 +2,15 @@ version: '1'
 
 realms:
   - name: realm1
+    roles:
+      - name: anonymous
+        permissions:
+          - uri: ""
+            match: prefix
+            allow_call: true
+            allow_register: true
+            allow_publish: true
+            allow_subscribe: true
 
 transports:
   - type: websocket
